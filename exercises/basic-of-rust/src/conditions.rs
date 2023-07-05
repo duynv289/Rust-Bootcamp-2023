@@ -4,15 +4,25 @@
 // - another function call
 // - additional variables
 pub fn bigger(a: i32, b: i32) -> i32 {
-    todo!()
+    if a > b {
+        a
+    } else {
+        b
+    }
 }
 
 //Exercise 2
 // Input: Provide an arbitrary value of number
 // Check number is Positive or Negative or Zero
 // Output: &str
-fn check_number(number: u32) -> &'static str {
-    todo!()
+fn check_number(number: i32) -> &'static str {
+    if number > 0 {
+        "Positive"
+    } else if number == 0 {
+        "Zero"
+    } else {
+        "Negative"
+    }
 }
 
 // Exercise 3
@@ -20,10 +30,10 @@ fn check_number(number: u32) -> &'static str {
 // Step 2: Get the bar_for_fuzz and default_to_baz tests passing!
 
 pub fn foo_if_fizz(fizzish: &str) -> &str {
-    if fizzish == "fizz" {
-        "foo"
-    } else {
-        1
+    match fizzish {
+        "fizz" => "foo",
+        "fuzz" => "bar",
+        _ => "baz",
     }
 }
 
@@ -31,14 +41,18 @@ pub fn foo_if_fizz(fizzish: &str) -> &str {
 // Determine if a given year is a leap year
 // Implement logic
 fn is_leap_year(year: i32) -> bool {
-    todo!()
+    year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)
 }
 
 // Exercise 5
 // Calculate the factorial of a number
 // Implement logic
 fn factorial(n: u32) -> u32 {
-    todo!()
+    let mut _factorial = 1;
+    for i in 1..n + 1 {
+        _factorial = _factorial * i
+    }
+    _factorial
 }
 
 // Exercise 6
@@ -46,7 +60,16 @@ fn factorial(n: u32) -> u32 {
 // Implement logic
 
 fn is_prime(n: u32) -> bool {
-    todo!()
+    if n <= 1 {
+        return false;
+    }
+
+    for i in 2..n / 2 + 1 {
+        if n % i == 0 {
+            return false;
+        }
+    }
+    return true;
 }
 
 
@@ -60,23 +83,27 @@ mod tests {
     fn ten_is_bigger_than_eight() {
         assert_eq!(10, bigger(10, 8));
     }
+
     // Test for exercise 1
     #[test]
     fn fortytwo_is_bigger_than_thirtytwo() {
         assert_eq!(42, bigger(32, 42));
     }
+
     // Test for exercise 2
     #[test]
     fn test_check_number_positive() {
         let result = check_number(10);
         assert_eq!(result, "Positive");
     }
+
     // Test for exercise 2
     #[test]
     fn test_check_number_negative() {
         let result = check_number(-5);
         assert_eq!(result, "Negative");
     }
+
     // Test for exercise 2
     #[test]
     fn test_check_number_zero() {
@@ -135,6 +162,7 @@ mod tests {
         assert_eq!(is_prime(13), true);
         assert_eq!(is_prime(19), true);
     }
+
     // Test for exercise 6
     #[test]
     fn test_non_prime_number() {
@@ -143,6 +171,4 @@ mod tests {
         assert_eq!(is_prime(10), false);
         assert_eq!(is_prime(15), false);
     }
-
-
 }
